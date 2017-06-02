@@ -1,0 +1,335 @@
+= Intro to Functions in Clojure
+:author:    Tim Gilbert <tim@workframe.com>
+:docdate: 2017-06-01
+:source-highlighter: pygments
+:backend: slidy
+:max-width: 45em
+:data-uri: https://github.com/timgilbert/functions-in-clojure-slides/
+:icons:
+
+== Agenda
+- What is a function and what are they useful for?
+- How to call a function
+- How to define your own functions
+- Parameters
+- Higher-order functions
+- Recursion
+- Q & A
+
+== Goals
+
+At the end of this talk, you should know how to:
+
+- Understand what functions are and what they're good for
+- Define your own function
+- Call a function from the standard library or one you've defined
+
+== What is a function?
+
+There are a few different ways to think about functions. I'm focussing on two:
+
+- Mathy way: a function is a piece of code that takes a value as input
+  and returns a new value as output.
+
+- Procedural way: a function is a way of executing a bunch of different
+  steps in order.
+
+== The mathy way to think about functions
+
+Here's a mathematical function:
+
+`f(x) = x^2^`
+
+http://thenumerist.com/stretching-graphs-and-compressing-graphs/[Link to a graph]
+
+For every number you put into this function, you get a value out:
+
+- `f(1) = 1`
+- `f(2) = 4`
+- `f(3) = 9`
+
+NOTE: This is the primary way most Clojure programmers think about functions:
+they take one or more values in, and they produce a new value.
+
+Just about everything you can do in Clojure involves defining and calling functions.
+
+You can think of functions as a "black box." You put some stuff into the box,
+the box does something mysterious, and you get a new thing out of the box.
+
+== More on that black box idea
+
+Consider a web site where you log in with an email address and a password.
+You might think of the login procedure as a function where you pass the email
+address and the password into the box, and you get out success or failure.
+
+[source,clojure]
+------------------------------------------------------
+(log-in "tim@workframe.com" "incorrect password")
+; => false
+
+(log-in "tim@workframe.com" "correct password")
+; => true
+------------------------------------------------------
+
+Behind the scenes, the `log-in` function might do a great deal of complex work.
+Maybe it connects to a database to check if the password is correct, or maybe
+it connects to Facebook over the internet; maybe it just returns a random
+result every time you call it.
+
+As the user of the function - that is, the person who wrote the code that calls
+it - you don't need to know any of those messy details. All of that complexity
+is hidden from you, and you only see the result.
+
+This notion is called _encapsulation_ and is one of the hallmarks of Clojure
+programming, and of programming in general.
+
+== The procedural way to think about functions
+
+There's also a secondary way to think about functions: as a sequence of steps
+to do in order. The computer-sciencey term for a sequence of steps is a
+_procedure_.
+
+.Making a cup of coffee
+- Get a pitcher
+- Fill the pitcher with water
+- Pour the water in the coffee maker
+- Get the coffee grinds
+- Put them in the coffee maker
+- Hit the brew button
+- Wait for the coffee to brew
+- Get a mug
+- Pour coffee in the mug
+
+Most programming languages boil down to ways of telling a computer a
+series of steps like this.
+
+NOTE: This is not a very "functional" way to think about programming, but
+it can be helpful when you're trying to think about how to solve a problem.
+
+== Calling functions
+
+To call a function, you just enclose the function name in parentheses along
+with the input values you want to pass to the function. If you do this at the
+REPL, it will print the response for you.
+
+[source,clojure]
+------------------------------------------------------
+;; The inc function, short for increment, just adds 1 to its argument
+(inc 35)         ; => 36
+------------------------------------------------------
+
+In the above example, `*inc*` is the _function name_, and `*35*` is the
+_argument_.
+
+Some functions take more than one argument, in which case you just list them
+after the first argument.
+
+[source,clojure]
+------------------------------------------------------
+;; The + function adds all of its arguments together.
+(+ 1 2)                 ; => 3
+(+ 1 2 3 4 5)           ; => 15
+;; The str function converts all of its arguments into one big string
+(str 123 "hello" 456)   ; => "123hello456"
+------------------------------------------------------
+
+== More about function arguments
+
+You can pass any type of value into a function as an argument, like maps and vectors:
+
+[source,clojure]
+------------------------------------------------------
+(def sizes [:small :medium :large])
+
+;; The first function returns the first element in a collection
+(first sizes)  ; => :small
+;; The count function counts the number of items in a collection
+(count sizes)  ; => 3
+
+;; The sort function sorts a sequence (vector or list)
+(sort [-2 33 -1 4])  ; => (-2 -1 4 33)
+
+;; The nth function returns an element of a list at a certain position in it
+;; Note that the first element is at position 0, not position 1
+(nth [:a :b :c] 1)  ; => :b
+
+;; The get function retrieves a value out of a map:
+(get {:a 1, :b 2, :c 3} :c)  ; => 3
+;; Note that keywords are also functions, so you get use this as shorthand:
+(:c {:a 1, :b 2, :c 3})  ; => 3
+------------------------------------------------------
+
+== Aside: errors
+
+Note that most functions will only operate on certain types of data; if you
+pass them the wrong type you'll get an error.
+
+[source,clojure]
+------------------------------------------------------
+;; Sort needs to sort a list, passing it a single number returns an error
+(sort 75)
+; => IllegalArgumentException Don't know how to create ISeq from: java.lang.Long  clojure.lang.RT.seqFrom (RT.java:542)
+
+;; The nth function needs to get first a sequence, then a number, so the
+;; following example is incorrect and throws an error:
+(nth 1 [:a :b :c])
+; => ClassCastException clojure.lang.PersistentVector cannot be cast to java.lang.Number  user/eval1250 (form-init3318102646986532093.clj:1)
+------------------------------------------------------
+
+You can get information on what arguments a function expects to get using the `(doc)`
+function:
+
+[source,clojure]
+------------------------------------------------------
+(doc nth)
+
+clojure.core/nth
+([coll index] [coll index not-found])
+  Returns the value at the index. get returns nil if index out of
+  bounds, nth throws an exception unless not-found is supplied.  nth
+  also works for strings, Java arrays, regex Matchers and Lists, and,
+  in O(n) time, for sequences.
+------------------------------------------------------
+
+The built-in docs can be very terse, the online reference http://clojuredocs.org/
+tends to have good examples that can help.
+https://clojuredocs.org/clojure.core/nth[Here's nth].
+
+== Functions calling other functions
+
+You can nest function calls in a single statement.
+
+[source,clojure]
+------------------------------------------------------
+(str "There are " (* 60 24) " minutes in a day.")
+; => "There are 1440 minutes in a day."
+------------------------------------------------------
+
+The way this works is that the inner bit, `(* 60 60)`, is _evaluated_ to get its
+result, 1440. Then Clojure proceeds to call the `str` function as:
+
+[source,clojure]
+------------------------------------------------------
+(str "There are " 1440 " minutes in a day.")
+------------------------------------------------------
+
+You can nest function calls arbitrarily. Generally, they will be called
+innermost first.
+
+[source,clojure]
+------------------------------------------------------
+;; Fruits is a vector where each element is a map
+(def fruits [{:type :apple  :price 2.0}
+             {:type :pear   :price 3.0}
+             {:type :orange :price 1.0}])
+
+(str "Your total cost is " (* 5 (get (nth fruits 1) :price)))
+; => "Your total cost is 15.0"
+
+;; If we break down the above step by step, it looks like this:
+(nth fruits 1) ; => {:type :pear price 3.0}
+(str "Your total cost is " (* 5 (get {:type :pear price 3.0} :price)))
+
+(get {:type :pear price 3.0} :price) ; => 3.0
+(str "Your total cost is " (* 5 3.0))
+
+(* 5 3.0) ; => 15.0
+(str "Your total cost is " 15.0)
+------------------------------------------------------
+
+
+== Defining your own functions
+
+Here's a sneak peek at how you would define the square function in Clojure.
+
+I'll explain the function definition part shortly.
+
+[source,clojure]
+------------------------------------------------------
+;; Define the square function.
+;; "defn" is short for "define function"
+(defn square [x]
+  (* x x))
+
+;; To call the square function, we just enclose it in parens as usual:
+(square 1)   ; => 1
+(square 2)   ; => 4
+(square 99)  ; => 9801
+------------------------------------------------------
+
+== Elements of a function definition
+
+A function definition has three main parts.
+
+- The *function name* tells Clojure what your function is called.
++
+`(defn +++<b>square</b>+++ [x] (* x x))`
+
+- The *parameter list* tells Clojure what type of input, or _arguments_, your function takes.
++
+`(defn square +++<b>[x]</b>+++ (* x x))`
+
+- The *function body* tells Clojure how to generate the output, or _result_, of the function.
++
+`(defn square [x] +++<b>(* x x)</b>+++)`
+
+== Function names
+
+You can call your functions basically whatever you want.
+
+- Conventions: ? on the ends of predicates, separate words with dashes, lower-case
+
+== Parameter lists
+
+Parameters and arguments
+
+- Function arities
+- Formal vs actual parameters
+- Mention destructuring as an advanced topic
+
+== Function bodies
+
+- Side effects
+- Last value is the result
+
+== Purity and side effects
+
+== Bonus: higher-order functions
+
+Some functions take other functions as input.
+
+- map
+- reduce
+- filter
+
+== Double-bonus: anonymous functions
+
+Not useful without higher-order functions at this point
+
+== Bonus: recursion
+
+Functions can call themselves to do crazy stuff
+
+- Fibonacci I guess
+- Need to introduce flow control for this
+
+== Bonus: threading macro
+
+The threading macros help you chain a lot of function calls together.
+
+- The two flavors, `\->` and `\->>`
+- Gotchas
+
+== Aside: namespaces
+
+- Using `(require '[clojure.string :as string])` from the repl
+- ns access via string/split, etc
+- mention `(ns)` macro, I guess
+
+== Q & A
+
+NOTE: Thanks!
+
+Tim Gilbert <tim@workframe.com>
+
+https://github.com/timgilbert
