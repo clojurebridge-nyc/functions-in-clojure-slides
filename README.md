@@ -10,4 +10,4 @@ To build it:
 
     brew install asciidoc               # Or apt-get or whatnot
     pip install pygments
-    asciidoc intro.adoc && open intro.html
+    asciidoc -o docs/index.html intro.adoc && open docs/index.html
