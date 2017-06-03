@@ -12,10 +12,10 @@ To build locally:
 
     brew install asciidoc               # Or apt-get or whatnot
     pip install pygments
-    asciidoc -o index.html intro.adoc && open index.html
+    asciidoc index.adoc && open index.html
 
 To publish to github:
 
-    asciidoc -o index.html intro.adoc
+    asciidoc index.adoc
     git checkin -m "Updating compiled slides" index.html
     git push origin master
