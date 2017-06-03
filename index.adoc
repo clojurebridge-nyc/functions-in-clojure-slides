@@ -39,7 +39,7 @@ There are a few different ways to think about functions. I'm focusing on two:
 
 Here's a mathematical function:
 
-`f(x) = x ^2^`
++f(x) = x^2^+
 
 http://thenumerist.com/stretching-graphs-and-compressing-graphs/[Link to a graph]
 
@@ -407,7 +407,7 @@ Everything else in the function body is evaluated, but their results are not use
 [source,clojure]
 ------------------------------------------------------
 (defn weird-average [a b]
-  (+ 2 2)          ; This will be evaluated as 4, but the value is discarded
+  (+ 2 2)          ; This will be evaluated as 4, but discarded
   :hello           ; This is also discarded
   (/ (+ a b) 2.0)) ; This is the last form, so it is the return value
 ------------------------------------------------------

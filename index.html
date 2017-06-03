@@ -4031,7 +4031,7 @@ Procedural way: a function is a way of executing a bunch of different
 <h1 id="_the_mathy_way_to_think_about_functions">The mathy way to think about functions</h1>
 <div class="sectionbody" style="max-width:45em">
 <div class="paragraph"><p>Here&#8217;s a mathematical function:</p></div>
-<div class="paragraph"><p><code>f(x) = x ^2^</code></p></div>
+<div class="paragraph"><p><code>f(x) = x<sup>2</sup></code></p></div>
 <div class="paragraph"><p><a href="http://thenumerist.com/stretching-graphs-and-compressing-graphs/">Link to a graph</a></p></div>
 <div class="paragraph"><p>For every number you put into this function, you get a value out:</p></div>
 <ul class="">
@@ -4523,7 +4523,7 @@ other forms.</p></div>
 <div class="paragraph"><p>Everything else in the function body is evaluated, but their results are not used.</p></div>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span class="p">(</span><span class="kd">defn </span><span class="nv">weird-average</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span>
-  <span class="p">(</span><span class="nb">+ </span><span class="mi">2</span> <span class="mi">2</span><span class="p">)</span>          <span class="c1">; This will be evaluated as 4, but the value is discarded</span>
+  <span class="p">(</span><span class="nb">+ </span><span class="mi">2</span> <span class="mi">2</span><span class="p">)</span>          <span class="c1">; This will be evaluated as 4, but discarded</span>
   <span class="ss">:hello</span>           <span class="c1">; This is also discarded</span>
   <span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)</span> <span class="mf">2.0</span><span class="p">))</span> <span class="c1">; This is the last form, so it is the return value</span>
 </pre></div></div></div>
