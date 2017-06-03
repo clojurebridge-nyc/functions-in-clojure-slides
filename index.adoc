@@ -17,6 +17,8 @@
 .You can view these slides online here:
 NOTE: https://github.com/workframers/functions-in-clojure-slides/
 
+http://goo.gl/5HWLCz[goo.gl/5HWLCz]
+
 == Goals
 
 At the end of this talk, you should know how to:
