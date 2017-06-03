@@ -1,4 +1,4 @@
-= Intro to Functions in Clojure
+= ClojureBridge NYC 2017: Intro to Clojure Functions
 :author:    Tim Gilbert <tim@workframe.com>
 :docdate: 2017-06-01
 :source-highlighter: pygments
