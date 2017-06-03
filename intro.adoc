@@ -351,11 +351,15 @@ Goal: read a function definition
 How many parameters does this have?
 
 What will this example function do?
-////
 
 == Defining functions: more complex parameter lists
 
-The number
+Functions can accept any number of arguments.
+
+
+
+NOTE: The number of arguments a function accepts is known as its _arity_.
+////
 
 == Function names
 
@@ -391,10 +395,50 @@ A function which returns either `true` or `false` is called a _predicate_.
 
 The common convention for predicates is to end them with a `?` character.
 
-== Function bodies
+== Function bodies and side effects
 
-- Side effects
-- Last value is the result
+A function body (the part after the parameter list) can contain any number of
+other forms.
+
+*Only the last form in a function is used as the return value.*
+
+Everything else in the function body is evaluated, but their results are not used.
+
+[source,clojure]
+------------------------------------------------------
+(defn weird-average [a b]
+  (+ 2 2)          ; This will be evaluated as 4, but the value is discarded
+  :hello           ; This is also discarded
+  (/ (+ a b) 2.0)) ; This is the last form, so it is the return value
+------------------------------------------------------
+
+Why would you want to evaluate something you don't keep around? _Side effects_.
+
+A side effect is anything that happens inside of a function that changes
+something outside of the function.
+
+The most common example is I/O, or input/output from the program.
+
+[source,clojure]
+------------------------------------------------------
+(defn chatty-average [a b]
+  (println "a is" a "and b is" b)
+  (/ (+ a b) 2.0))
+------------------------------------------------------
+
+When you run this, you'll see some output from it:
+
+------------------------------------------------------
+user=> (chatty-average 1 2)
+a is 1 and b is 2
+1.5
+user=>
+------------------------------------------------------
+
+Note the line `a is 1 and b is 2` above. The actual return value is `1.5`.
+
+NOTE: As a _functional_ programming language, Clojure discourages the use of
+side effects.
 
 ////
 == Purity and side effects
@@ -436,12 +480,14 @@ You pass a function to another one by just writing its name, without parentheses
 ; CompilerException clojure.lang.ArityException: Wrong number of args (0) passed to: core/inc--inliner--6556
 ------------------------------------------------------
 
-== Bonus: threading macro
+- `filter` takes a predicate and uses it to filter elements of a sequence
 
-The threading macros help you chain a lot of function calls together.
+== Bonus: advanced topics
 
-- The two flavors, `->` and `->>`
-- Gotchas
+- Functions that take `[a b & rest]` arguments
+- Threading macros
+- The `(let)` statement
+- Destructuring
 
 == Q & A
 
