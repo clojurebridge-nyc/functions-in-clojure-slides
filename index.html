@@ -1,4 +1,3 @@
-<!-- hmmm -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -3911,27 +3910,17 @@ What is a function and what are they useful for?
 </li>
 <li>
 <span>
-How to call a function
+How do I call a function?
 </span>
 </li>
 <li>
 <span>
-How to define your own functions
+How do I define my own functions?
 </span>
 </li>
 <li>
 <span>
-Parameters
-</span>
-</li>
-<li>
-<span>
-Higher-order functions
-</span>
-</li>
-<li>
-<span>
-Recursion
+Some advanced topics, time permitting
 </span>
 </li>
 <li>
@@ -3968,7 +3957,7 @@ Call a function from the standard library or one you&#8217;ve defined
 <div class="sect1 slide">
 <h1 id="_what_is_a_function">What is a function?</h1>
 <div class="sectionbody" style="max-width:45em">
-<div class="paragraph"><p>There are a few different ways to think about functions. I&#8217;m focussing on two:</p></div>
+<div class="paragraph"><p>There are a few different ways to think about functions. I&#8217;m focusing on two:</p></div>
 <ul class="">
 <li>
 <span>
@@ -3989,7 +3978,7 @@ Procedural way: a function is a way of executing a bunch of different
 <h1 id="_the_mathy_way_to_think_about_functions">The mathy way to think about functions</h1>
 <div class="sectionbody" style="max-width:45em">
 <div class="paragraph"><p>Here&#8217;s a mathematical function:</p></div>
-<div class="paragraph"><p><code>f(x) = x^2^</code></p></div>
+<div class="paragraph"><p><code>f(x) = x ^2^</code></p></div>
 <div class="paragraph"><p><a href="http://thenumerist.com/stretching-graphs-and-compressing-graphs/">Link to a graph</a></p></div>
 <div class="paragraph"><p>For every number you put into this function, you get a value out:</p></div>
 <ul class="">
@@ -4070,9 +4059,19 @@ the box does something mysterious, and you get a new thing out of the box.</p></
 <div class="sect1 slide">
 <h1 id="_more_on_that_black_box_idea">More on that black box idea</h1>
 <div class="sectionbody" style="max-width:45em">
-<div class="paragraph"><p>Consider a web site where you log in with an email address and a password.
-You might think of the login procedure as a function where you pass the email
-address and the password into the box, and you get out success or failure.</p></div>
+<div class="paragraph"><p>Consider a web site where you log in with an email address and a password.</p></div>
+<ul class="">
+<li>
+<span>
+Input: email address and password
+</span>
+</li>
+<li>
+<span>
+Output: true or false
+</span>
+</li>
+</ul>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span class="p">(</span><span class="nf">log-in</span> <span class="s">&quot;tim@workframe.com&quot;</span> <span class="s">&quot;incorrect password&quot;</span><span class="p">)</span>
 <span class="c1">; =&gt; false</span>
@@ -4080,72 +4079,27 @@ address and the password into the box, and you get out success or failure.</p></
 <span class="p">(</span><span class="nf">log-in</span> <span class="s">&quot;tim@workframe.com&quot;</span> <span class="s">&quot;correct password&quot;</span><span class="p">)</span>
 <span class="c1">; =&gt; true</span>
 </pre></div></div></div>
-<div class="paragraph"><p>Behind the scenes, the <code>log-in</code> function might do a great deal of complex work.
-Maybe it connects to a database to check if the password is correct, or maybe
-it connects to Facebook over the internet; maybe it just returns a random
-result every time you call it.</p></div>
-<div class="paragraph"><p>As the user of the function - that is, the person who wrote the code that calls
-it - you don&#8217;t need to know any of those messy details. All of that complexity
-is hidden from you, and you only see the result.</p></div>
-<div class="paragraph"><p>This notion is called <em>encapsulation</em> and is one of the hallmarks of Clojure
-programming, and of programming in general.</p></div>
-</div>
-</div>
-<div class="sect1 slide">
-<h1 id="_the_procedural_way_to_think_about_functions">The procedural way to think about functions</h1>
-<div class="sectionbody" style="max-width:45em">
-<div class="paragraph"><p>There&#8217;s also a secondary way to think about functions: as a sequence of steps
-to do in order. The computer-sciencey term for a sequence of steps is a
-<em>procedure</em>.</p></div>
-<div class="title">Making a cup of coffee</div><ul class="">
+<div class="paragraph"><p>Behind the scenes, the <code>log-in</code> function might do a great deal of complex work.</p></div>
+<ul class="">
 <li>
 <span>
-Get a pitcher
+Connect to a database
 </span>
 </li>
 <li>
 <span>
-Fill the pitcher with water
+Contact Facebook to validate the user
 </span>
 </li>
 <li>
 <span>
-Pour the water in the coffee maker
-</span>
-</li>
-<li>
-<span>
-Get the coffee grinds
-</span>
-</li>
-<li>
-<span>
-Put them in the coffee maker
-</span>
-</li>
-<li>
-<span>
-Hit the brew button
-</span>
-</li>
-<li>
-<span>
-Wait for the coffee to brew
-</span>
-</li>
-<li>
-<span>
-Get a mug
-</span>
-</li>
-<li>
-<span>
-Pour coffee in the mug
+Return a random result every time you call it
 </span>
 </li>
 </ul>
-<div class="paragraph"><p>Most programming languages boil down to ways of telling a computer a
-series of steps like this.</p></div>
+<div class="paragraph"><p>When you call the function you don&#8217;t need to know any of those messy details.</p></div>
+<div class="paragraph"><p>All of that complexity is hidden from you, and you only see the output of the
+function.</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -4195,10 +4149,101 @@ lmUMDQ1RKpXOm9EXvV6v1+tWr9eZnp5mZmaGWq1GjLHF62aiNZ+bnPfe45xrvTZzxMyYmZk56+LX
 zKjX661DvHOOJElIkoRSqYT3/vLvRlW15eHCa4VxzdvmpjZDfubzuXeb3vuzqCEixBhbo0NTkyS5
 PAr9L8j/96+U/w3yCoCXW14B8HLLvwDd67nwZIEPdgAAAABJRU5ErkJggg==" />
 </td>
-<td class="content">This is not a very "functional" way to think about programming, but
-it can be helpful when you&#8217;re trying to think about how to solve a problem.</td>
+<td class="content">This notion is called <em>encapsulation</em> and is one of the hallmarks of Clojure
+programming, and of programming in general.</td>
 </tr></table>
 </div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_sneak_peek_defining_your_own_functions">Sneak peek: defining your own functions</h1>
+<div class="sectionbody" style="max-width:45em">
+<div class="paragraph"><p>Here&#8217;s how we would define the square function in Clojure.</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span class="c1">;; Define the square function.</span>
+<span class="c1">;; &quot;defn&quot; is short for &quot;define function&quot;</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">square</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">* </span><span class="nv">x</span> <span class="nv">x</span><span class="p">))</span>
+
+<span class="c1">;; To call the square function, we just enclose it in parens as usual:</span>
+<span class="p">(</span><span class="nf">square</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1">; =&gt; 1</span>
+<span class="p">(</span><span class="nf">square</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1">; =&gt; 4</span>
+<span class="p">(</span><span class="nf">square</span> <span class="mi">99</span><span class="p">)</span>  <span class="c1">; =&gt; 9801</span>
+</pre></div></div></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_elements_of_a_function_definition">Elements of a function definition</h1>
+<div class="sectionbody" style="max-width:45em">
+<div class="paragraph"><p>A function definition has three main parts.</p></div>
+<ul class="">
+<li>
+<span>
+The <em>function name</em> tells Clojure what your function is called.
+</span>
+<div class="paragraph"><p><code>(defn <b>square</b> [x] (* x x))</code></p></div>
+</li>
+<li>
+<span>
+The <em>parameter list</em> tells Clojure what type of input, or <em>arguments</em>, your
+  function takes.
+</span>
+<div class="paragraph"><p><code>(defn square <b>[x]</b> (* x x))</code></p></div>
+<div class="paragraph"><p>Parameter lists are always enclosed in square brackets.</p></div>
+</li>
+<li>
+<span>
+The <em>function body</em> tells Clojure how to generate the output, or <em>result</em>,
+  of the function.
+</span>
+<div class="paragraph"><p><code>(defn square [x] <b>(* x x)</b>)</code></p></div>
+</li>
+</ul>
+<div class="paragraph"><p>We&#8217;ll get back to function definitions a little later.</p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_the_procedural_way_to_think_about_functions">The procedural way to think about functions</h1>
+<div class="sectionbody" style="max-width:45em">
+<div class="paragraph"><p>There&#8217;s also a secondary way to think about functions: as a sequence of steps
+to do in order. The computer-sciencey term for a sequence of steps is a
+<em>procedure</em>.</p></div>
+<div class="paragraph"><p>Let&#8217;s consider a <a href="https://www.littlecoffeeplace.com/wp-content/uploads/2016/03/Breville-Grind-Control-Grind-Display-Water-Tank-Bean-Hoper-Grind-Knob.png">coffee-maker</a>, where you add beans and water, hit a button, and
+get a pot of coffee.</p></div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Making a pot of coffee</div><ul class="">
+<li>
+<span>
+Grind the coffee beans
+</span>
+</li>
+<li>
+<span>
+Put the ground coffee into the filter
+</span>
+</li>
+<li>
+<span>
+Boil the water
+</span>
+</li>
+<li>
+<span>
+Pour the water through the coffee grounds
+</span>
+</li>
+</ul>
+</div></div>
+<div class="paragraph"><p>As a user of the coffee machine, you don&#8217;t care how it works.</p></div>
+<ul class="">
+<li>
+<span>
+You give it coffee beans and water, and it gives you coffee.
+</span>
+</li>
+</ul>
+<div class="paragraph"><p>Most programming languages boil down to ways of telling a computer a
+series of steps like this.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4209,10 +4254,10 @@ with the input values you want to pass to the function. If you do this at the
 REPL, it will print the response for you.</p></div>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span class="c1">;; The inc function, short for increment, just adds 1 to its argument</span>
-<span class="p">(</span><span class="nb">inc </span><span class="mi">35</span><span class="p">)</span>         <span class="c1">; =&gt; 36</span>
+<span class="p">(</span><span class="nb">inc </span><span class="mi">35</span><span class="p">)</span> <span class="c1">; =&gt; 36</span>
 </pre></div></div></div>
-<div class="paragraph"><p>In the above example, <code>*inc*</code> is the <em>function name</em>, and <code>*35*</code> is the
-<em>argument</em>.</p></div>
+<div class="paragraph"><p>In the above example, <code><b>inc</b></code> is the <em>function name</em>, and
+<code><b>35</b></code> is the <em>argument</em>.</p></div>
 <div class="paragraph"><p>Some functions take more than one argument, in which case you just list them
 after the first argument.</p></div>
 <div class="listingblock">
@@ -4256,12 +4301,12 @@ after the first argument.</p></div>
 <div class="paragraph"><p>Note that most functions will only operate on certain types of data; if you
 pass them the wrong type you&#8217;ll get an error.</p></div>
 <div class="listingblock">
-<div class="content"><div class="highlight"><pre><span class="c1">;; Sort needs to sort a list, passing it a single number returns an error</span>
+<div class="content"><div class="highlight"><pre><span class="c1">;; Sort needs to sort a list. Giving it a single number is an error:</span>
 <span class="p">(</span><span class="nb">sort </span><span class="mi">75</span><span class="p">)</span>
 <span class="c1">; =&gt; IllegalArgumentException Don&#39;t know how to create ISeq from: java.lang.Long  clojure.lang.RT.seqFrom (RT.java:542)</span>
 
-<span class="c1">;; The nth function needs to get first a sequence, then a number, so the</span>
-<span class="c1">;; following example is incorrect and throws an error:</span>
+<span class="c1">;; The nth function needs to get first a sequence, then a number.</span>
+<span class="c1">;; The following example is incorrect and throws an error:</span>
 <span class="p">(</span><span class="nb">nth </span><span class="mi">1</span> <span class="p">[</span><span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">])</span>
 <span class="c1">; =&gt; ClassCastException clojure.lang.PersistentVector cannot be cast to java.lang.Number  user/eval1250 (form-init3318102646986532093.clj:1)</span>
 </pre></div></div></div>
@@ -4269,14 +4314,16 @@ pass them the wrong type you&#8217;ll get an error.</p></div>
 function:</p></div>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span class="p">(</span><span class="nb">doc </span><span class="nv">nth</span><span class="p">)</span>
-
-<span class="nv">clojure.core/nth</span>
-<span class="p">([</span><span class="nv">coll</span> <span class="nv">index</span><span class="p">]</span> <span class="p">[</span><span class="nv">coll</span> <span class="nb">index </span><span class="nv">not-found</span><span class="p">])</span>
-  <span class="nv">Returns</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">at</span> <span class="nv">the</span> <span class="nv">index.</span> <span class="nb">get </span><span class="nv">returns</span> <span class="nv">nil</span> <span class="k">if </span><span class="nb">index </span><span class="nv">out</span> <span class="nv">of</span>
-  <span class="nv">bounds</span>, <span class="nb">nth </span><span class="nv">throws</span> <span class="nv">an</span> <span class="nv">exception</span> <span class="nv">unless</span> <span class="nv">not-found</span> <span class="nv">is</span> <span class="nv">supplied.</span>  <span class="nv">nth</span>
-  <span class="nv">also</span> <span class="nv">works</span> <span class="nb">for </span><span class="nv">strings</span>, <span class="nv">Java</span> <span class="nv">arrays</span>, <span class="nv">regex</span> <span class="nv">Matchers</span> <span class="nb">and </span><span class="nv">Lists</span>, <span class="nv">and</span>,
-  <span class="nv">in</span> <span class="nv">O</span><span class="p">(</span><span class="nf">n</span><span class="p">)</span> <span class="nv">time</span>, <span class="nb">for </span><span class="nv">sequences.</span>
 </pre></div></div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>clojure.core/nth
+([coll index] [coll index not-found])
+  Returns the value at the index. get returns nil if index out of
+  bounds, nth throws an exception unless not-found is supplied.  nth
+  also works for strings, Java arrays, regex Matchers and Lists, and,
+  in O(n) time, for sequences.</code></pre>
+</div></div>
 <div class="paragraph"><p>The built-in docs can be very terse, the online reference <a href="http://clojuredocs.org/">http://clojuredocs.org/</a>
 tends to have good examples that can help.
 <a href="https://clojuredocs.org/clojure.core/nth">Here&#8217;s nth</a>.</p></div>
@@ -4319,50 +4366,6 @@ innermost first.</p></div>
 </div>
 </div>
 <div class="sect1 slide">
-<h1 id="_defining_your_own_functions">Defining your own functions</h1>
-<div class="sectionbody" style="max-width:45em">
-<div class="paragraph"><p>Here&#8217;s a sneak peek at how you would define the square function in Clojure.</p></div>
-<div class="paragraph"><p>I&#8217;ll explain the function definition part shortly.</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span class="c1">;; Define the square function.</span>
-<span class="c1">;; &quot;defn&quot; is short for &quot;define function&quot;</span>
-<span class="p">(</span><span class="kd">defn </span><span class="nv">square</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
-  <span class="p">(</span><span class="nb">* </span><span class="nv">x</span> <span class="nv">x</span><span class="p">))</span>
-
-<span class="c1">;; To call the square function, we just enclose it in parens as usual:</span>
-<span class="p">(</span><span class="nf">square</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1">; =&gt; 1</span>
-<span class="p">(</span><span class="nf">square</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1">; =&gt; 4</span>
-<span class="p">(</span><span class="nf">square</span> <span class="mi">99</span><span class="p">)</span>  <span class="c1">; =&gt; 9801</span>
-</pre></div></div></div>
-</div>
-</div>
-<div class="sect1 slide">
-<h1 id="_elements_of_a_function_definition">Elements of a function definition</h1>
-<div class="sectionbody" style="max-width:45em">
-<div class="paragraph"><p>A function definition has three main parts.</p></div>
-<ul class="">
-<li>
-<span>
-The <strong>function name</strong> tells Clojure what your function is called.
-</span>
-<div class="paragraph"><p><code>(defn <b>square</b> [x] (* x x))</code></p></div>
-</li>
-<li>
-<span>
-The <strong>parameter list</strong> tells Clojure what type of input, or <em>arguments</em>, your function takes.
-</span>
-<div class="paragraph"><p><code>(defn square <b>[x]</b> (* x x))</code></p></div>
-</li>
-<li>
-<span>
-The <strong>function body</strong> tells Clojure how to generate the output, or <em>result</em>, of the function.
-</span>
-<div class="paragraph"><p><code>(defn square [x] <b>(* x x)</b>)</code></p></div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect1 slide">
 <h1 id="_function_names">Function names</h1>
 <div class="sectionbody" style="max-width:45em">
 <div class="paragraph"><p>You can call your functions basically whatever you want.</p></div>
@@ -4396,6 +4399,9 @@ Mention destructuring as an advanced topic
 </span>
 </li>
 </ul>
+<div class="paragraph"><p>TODO: goal: read a function definition</p></div>
+<div class="paragraph"><p>How many parameters does this have?</p></div>
+<div class="paragraph"><p>What will this example function do?</p></div>
 </div>
 </div>
 <div class="sect1 slide">
@@ -4417,6 +4423,16 @@ Last value is the result
 </div>
 <div class="sect1 slide">
 <h1 id="_purity_and_side_effects">Purity and side effects</h1>
+<div class="sectionbody" style="max-width:45em">
+<div class="paragraph"><p>Define side-effects
+- Compare / contrast with black box idea
+- Referential transparency</p></div>
+<div class="paragraph"><p>(printlns)</p></div>
+<div class="paragraph"><p>Why is it important?</p></div>
+</div>
+</div>
+<div class="sect1 slide">
+<h1 id="_advanced_topics_go_fast">Advanced topics: go fast</h1>
 <div class="sectionbody" style="max-width:45em">
 </div>
 </div>
