@@ -312,6 +312,11 @@ Here's how we might define our coffee-maker from earlier:
 
 Note how we're breaking a large task up into a series of smaller tasks.
 
+////
+Exercise: some kind of complex operation
+Exercise: navigate into a map
+////
+
 == Back to defining functions: parameter lists
 
 Earlier we defined the `square` function, with a single argument `x`.
@@ -349,6 +354,10 @@ name them whatever you want.
 
 (defn log-in [email-address password] ...)
 ------------------------------------------------------
+
+== (Bonus) Parameter lists and arity
+
+
 
 ////
 Goal: read a function definition
@@ -445,6 +454,16 @@ Note the line `a is 1 and b is 2` above. The actual return value is `1.5`.
 NOTE: As a _functional_ programming language, Clojure discourages the use of
 side effects.
 
+== Using `(let)`
+
+- Works like (def)
+
+== Namespaces and libraries
+
+- using `(require)` from the command-line
+- Note on quoting vector
+- :as, :refer
+
 ////
 == Purity and side effects
 
@@ -458,7 +477,14 @@ Why is it important?
 
 == Advanced topics: go fast
 ////
-== Bonus: higher-order functions
+== (Advanced) higher-order functions
+
+////
+Todo: move map to its own file
+sort-by
+update
+merge-with
+////
 
 Some functions take other functions as input.
 
@@ -485,7 +511,26 @@ You pass a function to another one by just writing its name, without parentheses
 ; CompilerException clojure.lang.ArityException: Wrong number of args (0) passed to: core/inc--inliner--6556
 ------------------------------------------------------
 
+== (Advanced) more about `(map)`
+
+- Map keyword over list of maps
+
+== (Advanced) using `(filter)`
+
 - `filter` takes a predicate and uses it to filter elements of a sequence
+
+== (Advanced) using `(reduce)`
+
+- Way of reducing a map
+- `(reduce + ...)`
+
+== Bonus: arrow macros
+
+- The problem: deeply-nested expressions
+- Solving this problem using let
+- Using the arrow macro to simplify
+- The two flavors and when they're used (map, filter)
+- Arrow functions to navigate into data
 
 == Bonus: advanced topics
 
@@ -501,3 +546,10 @@ NOTE: Thanks!
 Tim Gilbert <tim@workframe.com>
 
 https://github.com/timgilbert
+
+////
+TODO:
+- exercises!
+- Control flow?
+
+////
