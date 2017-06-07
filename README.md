@@ -14,6 +14,11 @@ To build locally:
     pip install pygments
     asciidoc index.adoc && open index.html
 
+Auto-building:
+
+    brew install fswatch
+    fswatch -o index.adoc | xargs -n1 -I{} asciidoc index.adoc
+
 To publish to github:
 
     asciidoc index.adoc
